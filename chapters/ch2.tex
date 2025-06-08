@@ -1,0 +1,432 @@
+%! TEX root = ../ma351.tex
+
+\section{Test for Linear Independence}
+
+\begin{itemize}
+  \item For $S = \{ A_1, A_2, \ldots, A_n \}$, the \textbf{dependency equation} is of the form $x_1 A_1 + \ldots + x_n A_n = 0$
+  \item $S$ is linearly independent iff the solution to the dependency equation is $x_1 = x_2 = \ldots = x_n = 0$
+  \item To find dependency among elements, we obtain the \textbf{dependency system} by equating entries in the dependency equation and obtain \textbf{pivot matrix}.
+    Then we let one of the free variables equal to -1 and all other free variables to 0, expressing the matrix corresponding to the free variable in terms of pivot matrices.
+    For example:
+    \begin{align*}
+      S = \left\{
+        \begin{bmatrix}
+          1 & 2\\ 1 & 3
+        \end{bmatrix},
+        \begin{bmatrix}
+          1 & 2\\ 2 & 4
+        \end{bmatrix},
+        \begin{bmatrix}
+          -1 & -2\\ -3 & -5
+        \end{bmatrix},
+        \begin{bmatrix}
+          -1 & -2\\ 0 & -2
+        \end{bmatrix}
+      \right\}
+    \end{align*}
+    The dependency equation is
+    \begin{align*}
+        x \begin{bmatrix}
+          1 & 2\\ 1 & 3
+        \end{bmatrix}
+        +
+        y \begin{bmatrix}
+          1 & 2\\ 2 & 4
+        \end{bmatrix}
+        +
+        z \begin{bmatrix}
+          -1 & -2\\ -3 & -5
+        \end{bmatrix}
+        +
+        w \begin{bmatrix}
+          -1 & -2\\ 0 & -2
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+          0 & 0\\ 0 & 0
+        \end{bmatrix}
+        \\
+        \begin{bmatrix}
+          x + y - z - w & 2x + 2y - 2z - 2w\\
+          x + 2y - 3z & 3x + 4y -5z - 2w
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+          0 & 0\\ 0 & 0
+        \end{bmatrix}
+    \end{align*}
+    The dependency system is
+    \begin{align*}
+      &
+      \begin{cases}
+        x + y - z - w &= 0\\
+        2x + 2y - 2z - 2w &= 0\\
+        x + 2y - 3z &= 0\\
+        3x + 4y - 5z - 2w &= 0
+      \end{cases}
+      \\
+      &
+      \begin{bmatrix}
+        1 & 1 & -1 & -1 & 0\\
+        2 & 2 & -2 & -2 & 0\\
+        1 & 2 & -3 & 0 & 0\\
+        3 & 4 & -5 & -2 & 0
+      \end{bmatrix}
+    \end{align*}
+    \begin{align*}
+      \arrows4{}{R_2 - 2R_1}{R_3 - R_1}{R_4 - 3R_1}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 1 & -1 & -1 & 0\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 1 & -2 & 1 & 0\\
+        0 & 1 & -2 & 1 & 0
+      \end{array}\right]
+      %
+      \arrows4{R_1 - R_3}{}{}{R_4 - R_3}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 0 & 1 & -2 & 0\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 1 & -2 & 1 & 0\\
+        0 & 0 & 0 & 0 & 0
+      \end{array}\right]
+      %
+      \arrows4{}{R_3}{R_2}{}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 0 & 1 & -2 & 0\\
+        0 & 1 & -2 & 1 & 0\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0
+      \end{array}\right]
+    \end{align*}
+    Thus, x and y are pivot variables, making
+    \begin{align*}
+      \begin{bmatrix}
+        1 & 2\\ 1 & 3
+      \end{bmatrix},
+      \begin{bmatrix}
+        1 & 2\\ 2 & 4
+      \end{bmatrix}
+    \end{align*}
+    pivot matrices, and $x = -z + 2w, y = 2z - w$.
+    \begin{itemize}
+      \item To express
+        \begin{align*}
+          \begin{bmatrix}
+            -1 & -2\\ -3 & -5
+          \end{bmatrix}
+        \end{align*}
+        (the matrix corresponding to $z$) in terms of the pivot matrices, we let $z = -1, w = 0$
+        \begin{align*}
+          x = -(-1) + 2(0) = 1, y = 2(-1) - (0) = -2\\
+          1 \begin{bmatrix}
+            1 & 2\\ 1 & 3
+          \end{bmatrix}
+          - 2 \begin{bmatrix}
+            1 & 2\\ 2 & 4
+          \end{bmatrix}
+          - \begin{bmatrix}
+            -1 & -2\\ -3 & -5
+          \end{bmatrix}
+          +
+          0 \begin{bmatrix}
+            -1 & -2\\ 0 & -2
+          \end{bmatrix}
+          &= 0
+          \\ \therefore
+          \begin{bmatrix}
+            1 & 2\\ 1 & 3
+          \end{bmatrix}
+          - 2 \begin{bmatrix}
+            1 & 2\\ 2 & 4
+          \end{bmatrix}
+          &=
+          \begin{bmatrix}
+            -1 & -2\\ -3 & -5
+          \end{bmatrix}
+        \end{align*}
+        Voila.
+      \item To express
+        \begin{align*}
+          \begin{bmatrix}
+            -1 & -2\\ 0 & -2
+          \end{bmatrix}
+        \end{align*}
+        (the matrix corresponding to $w$) in terms of the pivot matrices, we let $z = 0, w = -1$
+        \begin{align*}
+          x = -(0) + 2(-1) = -2, y = 2(0) - (-1) = 1\\
+          -2 \begin{bmatrix}
+            1 & 2\\ 1 & 3
+          \end{bmatrix}
+          + 1 \begin{bmatrix}
+            1 & 2\\ 2 & 4
+          \end{bmatrix}
+          + 0 \begin{bmatrix}
+            -1 & -2\\ -3 & -5
+          \end{bmatrix}
+          - 1 \begin{bmatrix}
+            -1 & -2\\ 0 & -2
+          \end{bmatrix}
+          &= 0
+          \\ \therefore
+          -2 \begin{bmatrix}
+            1 & 2\\ 1 & 3
+          \end{bmatrix}
+          + \begin{bmatrix}
+            1 & 2\\ 2 & 4
+          \end{bmatrix}
+          &=
+          \begin{bmatrix}
+            -1 & -2\\ 0 & -2
+          \end{bmatrix}
+        \end{align*}
+        Voila again.
+    \end{itemize}
+  \item Set of pivot matrices are linearly independent and non-pivot matrices are linear combinations of the pivot matrices.
+  \item Linearly dependent vectors do not contribute to the span, and you can produce a smaller spanning set by deleting a linearly dependent element of the set.
+  \item A \textbf{basis} is a linearly independent subset that spans the vector space.
+  \item The \textit{original} columns corresponding to the pivot variables of a homogeneous system (actually, for the sake of finding pivot variables, any $AX = B, B \in \mathbb{R}$ should suffice) are called \textbf{pivot columns} and the pivot columns of a matrix $A$ form a basis for the column space of $A$.
+    For example, to find a basis for the column space of
+    \begin{align*}
+      A = \begin{bmatrix}
+        1 & 2 & -1 & 3\\
+        2 & 2 & -4 & 4\\
+        1 & 3 & 0 & 4
+      \end{bmatrix}
+    \end{align*}
+    The homogeneous system ($AX = 0$) corresponds to the following augmented matrix
+    \begin{align*}
+      &
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 2 & -1 & 3 & 0 \\
+        2 & 2 & -4 & 4 & 0\\
+        1 & 3 & 0 & 4 & 0
+      \end{array}\right]
+      \\
+      &
+      \arrows3{}{R_2 - 2R_1}{R_3 - R_1}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 2 & -1 & 3 & 0 \\
+        0 & -2 & -2 & -2 & 0\\
+        0 & 1 & 1 & 1 & 0
+      \end{array}\right]
+      \arrows3{}{}{R_3 + \frac{R_2}{2}}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 2 & -1 & 3 & 0 \\
+        0 & -2 & -2 & -2 & 0\\
+        0 & 0 & 0 & 0 & 0
+      \end{array}\right]
+    \end{align*}
+    Since $x_1$ and $x_2$ are pivot variables, the corresponding columns $A_1$ and $A_2$ form the basis\\
+    $\{ [1, 2, 1]^t, [2, 2, 3]^t \}$.
+  \item The span of the pivot columns and the span of the columns in the reduced form are different (i.e., the columns in the reduced form do not form the basis).
+    However they share the scalars required to produce linearly dependent columns.
+    Formally, for row equivalent matrices $A$ and $B$, if $B_j = c_1 B_1 + \ldots c_{j - 1} B_{j - 1} + c_{j + 1} B_{j + 1} + \ldots + c_n B_n$, then $A_j = c_1 A_1 + \ldots c_{j - 1} A_{j - 1} + c_{j + 1} A_{j + 1} + \ldots + c_n A_n$.
+    For example:\\
+    In the previous example, it is clearly the case that $\text{span} \{ [1, 2, 1]^t, [2, 2, 3]^t \} \neq \text{span} \{ [1, 0, 0]^t, [2, -2, 0]^t \}$.\\
+    Nonetheless, since
+    \begin{align*}
+      A_3 &= [ -1 , -4, 0 ]^t = -3 [1, 2, 1]^t = -3 A_1 + A_2 = -3 [1, 2, 1]^t + [2, 2, 3]^t \\
+      A_4 &= [3, 4, 4]^t = [1, 2, 1]^t + [2, 2, 3]^t = A_1 + A_2
+    \end{align*}
+    we know that (let $A^r$ be the reduced form of $A$)
+    \begin{align*}
+      A^r_3 &= [-1, -2, 0]^t = -3 [1, 0, 0]^t = -3 A^r_1 + A^r_2 = -3 [1, 0, 0]^t + [2, -2, 0]^t \\
+      A^r_4 &= [3, -2, 0]^t = [1, 0, 0]^t + [2, -2, 0]^t = A^r_1 + A^r_2
+    \end{align*}
+\end{itemize}
+
+\section{Dimension}
+
+\begin{itemize}
+  \item The \textbf{dimension} of a vector space $\mathcal{V}$ is the smallest number of elements necessary to span $\mathcal{V}$
+  \item The \textbf{Dimension Theorem} states that any basis for an $n$-dimensional vector space contains exactly $n$ elements
+  \item Some consequences of the dimension theorem (for an $n$ dimensional V.S. $\mathcal{V}$):
+    \begin{enumerate}[label={\arabic*)}]
+      \item Any set of $\mathcal{V}$ containing more than $n$ elements must be linearly dependent
+      \item Any set of $n$ elements of $\mathcal{V}$ that spans $\mathcal{V}$ must be linearly independent and is a basis
+      \item Any linear independent set of $n$ elements of $\mathcal{V}$ must span $\mathcal{V}$
+    \end{enumerate}
+  \item \textbf{Standard basis} for $\mathbb{R}^n$ is formed by the columns of the $n \times n$ \textbf{identity matrix} $I$.
+    For example, following is the $3 \times 3$ identity matrix and the standard basis for $\mathbb{R}^3$
+    \begin{align*}
+      &
+      I = \begin{bmatrix}
+        1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1
+      \end{bmatrix}
+      \\
+      \{ I_1, I_2, I_3 \} \text{ where }
+      &
+      I_1 = \begin{bmatrix}
+          1\\ 0\\ 0
+        \end{bmatrix},
+      I_2 = \begin{bmatrix}
+          0\\ 1\\ 0
+        \end{bmatrix},
+      I_3 = \begin{bmatrix}
+          0\\ 0\\ 1
+        \end{bmatrix}
+    \end{align*}
+    \textit{[Calc 3 trauma warning]} These vectors are denoted by $i, j, k$ in $\mathbb{R}^3$.
+  \item Standard basis for $M(m, n)$ is a set of matrices $E_{i, j}$ whose non-zero element is a $1$ in the $(i, j)$.
+    The dimension of $M(m, n)$ is $mn$.
+    For example, $M(2, 2)$ is $4$-dimensional and its standard basis is
+    \begin{align*}
+      \left\{
+        \begin{bmatrix}
+          1 & 0\\ 0 & 0
+        \end{bmatrix},
+        \begin{bmatrix}
+          0 & 1\\ 0 & 0
+        \end{bmatrix},
+        \begin{bmatrix}
+          0 & 0\\ 1 & 0
+        \end{bmatrix},
+        \begin{bmatrix}
+          0 & 0\\ 0 & 1
+        \end{bmatrix}
+      \right\}
+    \end{align*}
+  \item Standard basis for $\mathcal{P}_n$ is a set of $1 \cdot x^i$.
+    $\mathcal{P}_n$ has a dimension $n + 1$.
+    For example, the general polynomial of degree $3$ is
+    \begin{align*}
+      P(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3
+    \end{align*}
+    and is spanned by the standard basis
+    \begin{align*}
+      \{ 1, x, x^2, x^3 \}
+    \end{align*}
+  \item There exists V.S> that are \textbf{infinite-dimensional}.
+    For example, $\mathbb{R}^\infty$ is the set of all vectors in the form $[ x_1, x_2, \ldots x_n, \ldots]$ (e.g., $X = [1, 2, \ldots, n, \ldots], Y = [ \frac{1}{1}, \frac{1}{2}, \ldots, \frac{1}{n}, \ldots]$).
+    It is a V.S. since it is closed under linear combinations ($X + Y \in \mathbb{R}^\infty \land 2X \in \mathbb{R}^\infty$).
+    The standard basis for $\mathbb{R}^\infty$ is in the form $I_3 = [0, 0, 1, 0, 0, \ldots, 0, \ldots]$.
+    Since there are infinitely many independent $I_j$, $\mathbb{R}^\infty$ is infinite-dimensional.
+\end{itemize}
+
+\section{Row Space and Rank-Nullity Theorem}
+
+\begin{itemize}
+  \item The \textbf{row space} of an $m * n$ matrix $A$ is the subspace of $M(1, n)$ spanned by rows of $A$
+  \item Row equivalent matrices have the same row space
+  \item \textbf{Nonzero Rows Theorem} states that the nonzero rows of any echelon form of $A$ form a basis for the row space of $A$>
+    For example,
+    \begin{align*}
+      A = \begin{bmatrix}
+        1 & 2 & 1\\
+        2 & 2 & 3\\
+        -1 & -4 & 0\\
+        3 & 4 & 4
+      \end{bmatrix}
+      \arrows4{}{R_2 - 2R_1}{R_3 + R_1}{R_4 - 3R_1}
+      \begin{bmatrix}
+        1 & 2 & 1\\
+        0 & -2 & 1\\
+        0 & -2 & 1\\
+        0 & -2 & 1
+      \end{bmatrix}
+      \arrows4{}{}{R_3 - R_2}{R_4 - R_2}
+      \begin{bmatrix}
+        1 & 2 & 1\\
+        0 & -2 & 1\\
+        0 & 0 & 0\\
+        0 & 0 & 0
+      \end{bmatrix}
+    \end{align*}
+    Thus, $\{ [1, 2, 1]^t, [0, -2, 1]^t \}$ form the basis for the $\text{row space}(A)$. \\
+    We may obtain a different basis by using a different echelon form.
+    \begin{align*}
+      \arrows4{R_1 + R_2}{}{}{}
+      \begin{bmatrix}
+        1 & 0 & 2\\
+        0 & -2 & 1\\
+        0 & 0 & 0\\
+        0 & 0 & 0
+      \end{bmatrix}
+      \arrows4{}{\frac{R_2}{-2}}{}{}
+      \begin{bmatrix}
+        1 & 0 & 2\\
+        0 & 1 & -\frac{1}{2}\\
+        0 & 0 & 0\\
+        0 & 0 & 0
+      \end{bmatrix}
+    \end{align*}
+    $\{ [1, 0, 2]^t, [0, 1, -\frac{1}{2}]^t \}$ is the basis obtained using RREF.
+    This basis is important as each element has 1 in the position where others have 0's.
+  \item \textbf{Rank Theorem} states that the row space and column space of a matrix $A$ has the same dimension, and the dimension is the rank of $A$.
+  \item $rank(A) = rank(A^t)$
+  \item A rank of an $m \times n$ matrix $A$ cannot exceed either $m$ or $n$
+  \item The set of columns of $A$ is linearly independent iff $rank(A) = n$
+  \item The set of rows of $A$ is linearly independent iff $rank(A) = m$
+    \begin{align*}
+      \begin{bmatrix}
+        1 & 2 & 3 & 4 & -7 \\
+        3 & 1 & 4 & 7 & 6 \\
+        0 & \pi & -2 & -2 & e \\
+        -2 & -5 & 17 & 15 & \sqrt{31}
+      \end{bmatrix}
+    \end{align*}
+    This matrix has the rank at most 4.
+    The set of columns are L.D. because by Dimension Theorem, 5 vectors in $\mathbb{R}^4$ must be L.D.
+    If $rank(A) = 4$, the set of rows are L.I.
+  \item The dimension of the nullspace of $A$ is called the \textbf{nullity} of $A$ (denoted by $null(A)$)
+  \item \textbf{Rank-Nullity Theorem} states that for an $m \times n$ matrix $A$,
+    \begin{align*}
+      rank(A) + null(A) = n
+    \end{align*}
+  \item $AX = B$ is solvable for all $B \in \mathbb{R}^m$ iff $rank(A) = m$
+    For example, for a $3 \times 4$ matrix with the echelon form
+    \begin{align*}
+      A = \begin{bmatrix}
+        1 & * & * & *\\
+        0 & 1 & * & *\\
+        0 & 0 & 0 & 1
+      \end{bmatrix}
+      \\
+      rank(A) = 3 = m
+    \end{align*}
+    We can see that any augmented matrix $AX = B$ for all $B \in \mathbb{R}^3$ will have a solution of $x_1 = b_1, x_2 = b_2, x_4 = b_4$, and $x_3$ is a free variable.
+    This is because the column space of $A$ contains 3 linearly independent elements of $\mathbb{R}^3$, spanning $\mathbb{R}^3$ as a result.
+  \item $AX = B$ has at most one solution for all $B \in \mathbb{R}^m$ iff $rank(A) = n$.\\
+    For a $4 \times 3$ matrix with the echelon form
+    \begin{align*}
+      A = \begin{bmatrix}
+        1 & * & *\\
+        0 & 1 & *\\
+        0 & 0 & 1\\
+        0 & 0 & 0
+      \end{bmatrix}
+      \\
+      rank(A) = 3 = n
+    \end{align*}
+    We can see that any $B \in \mathbb{R}^4$ with nonzero element in the 4th row will make $AX = B$ inconsistent (no/zero solution).
+    Otherwise, for $B = [b_1, b_2, b_3, 0]^t$, $AX = B$ has exactly one solution: $x_1 = b_1, x_2 = b_2, x_3 = b_3$.
+    This is because by the Rank-Nullity Theorem, $A$ has a nullity of $0$, meaning the nullspace of $A$ is $\emptyset$, and by the Translation Theorem, $AX = B$ has a unique solution if one exists.
+  \item An $n \times n$ matrix $A$ with rank $n$ is \textbf{nonsingular} and the solution to $AX = B$ both exists and is unique for all $B \in \mathbb{R}^n$.
+    Nonsingular matrix $A$ implies
+    \begin{enumerate}[label={(\alph*)}]
+      \item the nullspace of $A$ is $\emptyset$
+      \item For each $B \in \mathbb{R}^n$, the system $AX = B$ has at most one solution
+      \item The system $AX = B$ has a solution $\forall B \in \mathbb{R}^n$
+      \item $A$ is row equivalent to the identity matrix
+    \end{enumerate}
+    For example, assume a general $3 \times 3$ matrix
+    \begin{align*}
+      A = \begin{bmatrix}
+        1 & * & *\\
+        0 & 1 & *\\
+        0 & 0 & 1
+      \end{bmatrix}
+      ,
+      AX = B \text{ is } \begin{bmatrix}
+        1 & * & * & b_1\\
+        0 & 1 & * & b_2\\
+        0 & 0 & 1 & b_3
+      \end{bmatrix}
+    \end{align*}
+    It is trivial to see that
+    \begin{enumerate}[label={(\alph*)}]
+      \item $AX = B$ has exactly one solution $x_1 = x_2 = x_3 = 0$
+      \item if $B = 0$, then the only solution to $AX = B = 0$ is $x_1 = x_2 = x_3 = 0$, meaning that the nullspace is $\emptyset$
+    \end{enumerate}
+\end{itemize}
+

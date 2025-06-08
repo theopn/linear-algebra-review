@@ -1,0 +1,282 @@
+%! TEX root = ../ma351.tex
+
+\section{The Vector Space of \texorpdfstring{$m \times n$}{m x n} Matrices}
+
+\begin{itemize}
+  \item $M(m, n)$ is a set of all $m \times n$ matrices, $\mathbb{R}^n$ is the set of all $n \times 1$ matrices.
+  \item $C$ is a \textbf{linear combination} of $S = \{ A_1, A_2, \ldots, A_k \}$ if $C = b_1 A_1 + b_2 A_2 + \cdots + b_k A_k$ for some scalars $b_i$
+  \item $S$ is \textbf{linearly dependent} if at least one of the $A_i$ is a linear combination of other elements.
+  \item $span S$ of $S$ is a set of all linear combinations of elements in $S$.
+  \item \textbf{10 Vector Space properties are} (for $X, Y, Z \in \mathcal{V}$ and scalars $k, l$)
+    \begin{enumerate}
+      \item $X + Y \in \mathcal{V}$
+      \item $X + Y = Y + X$ (commutativity)
+      \item $X + (Y + Z) = (X + Y) + Z$ (associativity)
+      \item There is $0 \in \mathcal{V}$ such that $\forall X (X \in \mathcal{V} \land X + 0 = X)$ ("Zero element")
+      \item For each $X \in \mathcal{V}$, $X \in \mathcal{V}$ exists such that $X + (-X) = 0$
+      \item $k X \in \mathcal{V}$
+      \item $k(lX) = (kl) X$
+      \item $k (X + Y) = kX + kY$
+      \item $(k + l)X = kX + lX$
+      \item $1X = X$
+    \end{enumerate}
+  \item A set is a \textbf{vector space} if \textbf{addition} and \textbf{scalar multiplication} is defined so that 10 vector space properties hold.
+\end{itemize}
+
+\section{Systems}
+
+\begin{itemize}
+  \item
+    \textbf{Linear system} of equations are in the form
+    \begin{align*}
+      a_{1 1} x_1 + a_{1 2} + x_2 + \cdots + a_{1 n} + x_n &= b_1 \\
+      a_{2 1} x_1 + a_{2 2} + x_2 + \cdots + a_{2 n} + x_n &= b_2 \\
+                                                           &\vdotswithin{=} \notag \\
+      a_{m 1} x_1 + a_{m 2} + x_2 + \cdots + a_{m n} + x_n &= b_m
+    \end{align*}
+
+    \begin{align*}
+      \begin{bmatrix}
+        a_{1 1} & a_{1 2} & \cdots & a_{1 n} \\
+        a_{2 1} & a_{1 2} & \cdots & a_{2 n} \\
+        \vdots  & \vdots  & \ddots & \vdots \\
+        a_{m 1} & a_{m 2} & \cdots & a_{m n}
+      \end{bmatrix}
+      \begin{bmatrix}
+        x_1 \\
+        x_2 \\
+        \vdots \\
+        x_n
+      \end{bmatrix}
+    &=
+    \begin{bmatrix}
+      b_1 \\
+      b_2 \\
+      \vdots \\
+      b_n
+    \end{bmatrix}
+    \end{align*}
+  \item The set of all column vectors $[ x_1, x_2, \ldots, x_n ]^t$ of columns of values for the variables that solve the all equations is called the \textbf{solution set}
+  \item Two systems of linear equations in the same variables are \textbf{equivalent} if they have the same solution set
+  \item To produce equivalent systems of equations that is easier to solve, we use \textbf{Gaussian Elimination} on the \textbf{augmented matrix} of the system.
+    For example:
+    \begin{align*}
+      \begin{cases}
+        x + y + z &= 1 \\
+        4x + 3y + 5z &= 7 \\
+        2x + y + 3z &= 5
+      \end{cases}
+      %
+      \\
+      \left[\begin{array}{@{}rrr|r@{}}
+        1 & 1 & 1 & 1 \\
+        4 & 3 & 5 & 7 \\
+        2 & 1 & 3 & 5 \\
+      \end{array}\right]
+    \end{align*}
+    %
+    \begin{align*}
+      &
+      \arrows3{}{R_2 - 4R_1}{R_3 - 2R_1}
+      \left[\begin{array}{@{}rrr|r@{}}
+        1 & 1 & 1 & 1 \\
+        0 & -1 & 1 & 3 \\
+        0 & -1 & 1 & 3 \\
+      \end{array}\right]
+      %
+      \arrows3{}{}{R_3 - R_2}
+      \left[\begin{array}{@{}rrr|r@{}}
+        1 & 1 & 1 & 1 \\
+        0 & -1 & 1 & 3 \\
+        0 & 0 & 0 & 0 \\
+      \end{array}\right]
+      %
+      \arrows3{R_1 + R_2}{}{}
+      \left[\begin{array}{@{}rrr|r@{}}
+        1 & 0 & 2 & 4 \\
+        0 & -1 & 1 & 3 \\
+        0 & 0 & 0 & 0 \\
+      \end{array}\right]
+    \end{align*}
+    Let $z = s$, an arbitrary value.
+    Then $y = -(3 - s) = -3 + s, x = 4 - 2s$
+    \begin{align*}
+      \begin{bmatrix}
+        x \\ y \\ z
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        4 - 2s\\ -3 + s\\ s
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        4\\ -3 \\ 0
+      \end{bmatrix}
+      +
+      s \begin{bmatrix}
+        -2\\ 1\\ 1
+      \end{bmatrix}
+    \end{align*}
+  \item The produced solution is in \textbf{parametric form}, written as a translation vector ($[ 4, -3, 0]^t$) plus the spanning vectors ($s[-2, 1, 1]^t$).
+  \item A system of linear equations that has no solution is \textbf{inconsistent} (typically, an inconsistent system produces an inconsistent row vector, e.g., $[ 0 0 0 | 1]$ saying $0 = 1$, after elimination)
+  \item \textbf{Rank} of a system is the number of non-zero rows after elimination
+\end{itemize}
+
+\section{Gaussian Elimination}
+
+\begin{itemize}
+  \item \textbf{Elementary row operations} are
+    \begin{enumerate}[label={(\roman*)}]
+      \item Interchanging two rows
+      \item Adding a multiple of one row onto another
+      \item Multiplying one row by a non-zero constant
+    \end{enumerate}
+    A system after applying elementary row operations are equivalent to the system before (i.e., shares the same solution set).
+  \item A matrix is in \textbf{echelon form} if
+    \begin{enumerate}[label={\alph*)}]
+      \item The first non-zero entry in any non-zero row (\textbf{pivot entry}) occurs to the right of the pivot entry in the row directly above it
+      \item All non-zero rows are grouped together at the bottom
+        \begin{align*}
+          \begin{bmatrix}
+            \# & * & * & * & * \\
+            0 & \# & * & * & * \\
+            0 & 0 & 0 & \# & * \\
+            0 & 0 & 0 & 0 & 0
+          \end{bmatrix}
+        \end{align*}
+        $\#$ entries denote pivot entries and $*$ entries denote constants in the matrix above.
+    \end{enumerate}
+    \item Every matrix can be reduced into echelon form
+    \item The corresponding variables of the system to the pivot entries are called \textbf{pivot variables}.
+      Non-pivot variables are called free variables.
+    \item The set of pivot variables of equivalent systems are the same
+    \item Although the specific echelon form of a given matrix depends on the steps used in reducing the matrix, the final form of the solution does not
+    \item A matrix is in \textbf{row-reduced echelon form (RREF or simply "reduced form")} if
+      \begin{enumerate}[label={\alph*)}]
+        \item It is in echelon form
+        \item All pivot entries are 1
+        \item All entries above the pivots are 0
+      \end{enumerate}
+      \begin{align*}
+        &
+        \begin{bmatrix}
+          1 & 1 & 1 & 1 & 0 \\
+          0 & 1 & 2 & 0 & 1 \\
+          0 & 0 & 0 & 0 & 0
+        \end{bmatrix} \tag{Echelon form} \\
+        %
+        &
+        \begin{bmatrix}
+          &
+          1 & 0 & -1 & 1 & -1 \\
+          0 & 1 & 2 & 0 & 1 \\
+          0 & 0 & 0 & 0 & 0
+        \end{bmatrix}
+        \begin{matrix}
+          R_1 - R_2 \\
+          \\
+          \\
+        \end{matrix} \tag{RREF}
+      \end{align*}
+    \item Each $m \times n$ matrix is row equivalent to only one RREF matrix
+    \item \textbf{More Unknown Theorem}: A system of linear equation with more unknowns than equations will either have no solution or an infinite number of solutions
+\end{itemize}
+
+\section{Column Space and Nullspace}
+
+\begin{itemize}
+  \item The \textbf{coefficient matrix} of a system is the augmented matrix of the system with its last column (vector of constants) deleted
+  \item The \textbf{column space} of a matrix is the span of the columns of the matrix
+  \item A system is solvable iff the vector of constants is in the column space of the coefficient matrix
+  \item A subset $\mathcal{W}$ of some vector space $\mathcal{V}$ is a \textbf{subspace} of $\mathcal{V}$ if it is \textbf{closed under linear combinations} (for $x, y \in \mathcal{W}$ and scalars $s$ and $t$, $sX + sY \in \mathcal{W}$)
+  \item In geometric sense, subspaces are lines and planes through the origin
+  \item $\mathcal{W} = span(\{ A_1, \ldots, A_n \})$ where $A_1, \ldots, A_k \in \mathcal{V}$ is a subspace of $\mathcal{V}$
+  \item \textbf{Products} of $m \times n$ matrix and $n \times 1$ matrix is a notation for forming linear combinations of the columns of the coefficient matrix
+  \item \textbf{Linearity properties} of matrix multiplication are (where $A$ is $m \times n$ and $X, Y$ are $n \times 1$ matrix)
+    \begin{align*}
+      A(X + Y) = AX + AY \tag{distributive law} \\
+      A(aX) = aAX \tag{scalar law}
+    \end{align*}
+  \item $AX = 0$ is a \textbf{homogeneous system} corresponding to the system $AX = B$
+  \item The \textbf{nullspace} of a matrix $A$ is the solution space for $AX = 0$.\\
+    For example, to find a nullspace of
+    \begin{align*}
+      A =
+      \begin{bmatrix}
+        1 & 2 & 4 & 1 \\
+        1 & 1 & 3 & 2 \\
+        2 & 3 & 7 & 3
+      \end{bmatrix}
+    \end{align*}
+    $AX = 0$ corresponds to
+    \begin{align*}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 2 & 4 & 1 & 0 \\
+        1 & 1 & 3 & 2 & 0 \\
+        2 & 3 & 7 & 3 & 0
+      \end{array}\right]
+    \end{align*}
+    Compute RREF.
+    \begin{align*}
+      &  % use ampersand to align the matrices in new lines
+      \arrows3{}{R_2 - R_1}{R_3 - 2R_1}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 2 & 4 & 1 & 0 \\
+        0 & -1 & -1 & 1 & 0 \\
+        0 & -1 & -1 & 1 & 0
+      \end{array}\right]
+      %
+      \arrows3{}{}{R_3 - R_2}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 2 & 4 & 1 & 0 \\
+        0 & -1 & -1 & 1 & 0 \\
+        0 & 0 & 0 & 0 & 0
+      \end{array}\right]
+      %
+      \\
+      &
+      \arrows3{R_1 + 2R_2}{}{}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 0 & 2 & 3 & 0 \\
+        0 & -1 & -1 & 1 & 0 \\
+        0 & 0 & 0 & 0 & 0
+      \end{array}\right]
+      %
+      \arrows3{}{-R_2}{}
+      \left[\begin{array}{@{}rrrr|r@{}}
+        1 & 0 & 2 & 3 & 0 \\
+        0 & 1 & 1 & -1 & 0 \\
+        0 & 0 & 0 & 0 & 0
+      \end{array}\right]
+    \end{align*}
+    $x_3$ and $x_4$ are free variables, and $x_1 = -2x_3 - 3x_4$, $x_2 = -x_3 + x_4$.
+    \begin{align*}
+      \begin{bmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        -2x_3 - 3x_4\\ -x_3 + x_4\\ x_3\\ x_4
+      \end{bmatrix}
+      =
+      x_3 \begin{bmatrix}
+        -2\\ -1\\ 1\\ 0
+      \end{bmatrix}
+      +
+      x_4 \begin{bmatrix}
+        -3\\ 1\\ 0\\ 1
+      \end{bmatrix}
+    \end{align*}
+    Thus, $null(A)$ is $span\{ [ -2, -1, 1, 0]^t, [-3, 1, 0, 1]^t \}$.
+  \item \textbf{Trasnlation theorem}: The general solution to $AX = B$ is $X = T + Z$, where $T$ is any particular solution to $AX = B$ and $Z \in null(A)$
+  \item The solution to $AX = B$ is unique iff $null(A) = \emptyset$ (assuming a solution exists for $AX = B$)
+  \item The nullspace of $A$ ($m \times n$ matrix) is a subspace of $\mathbb{R}^n$
+  \item The spanning vectors of the parametric form for the solution of $AX= 0$ (which spans $null(A)$) are linearly independent (regardless of $A$)
+  \item \textbf{Subspace properties} are
+    \begin{enumerate}[label={\arabic*)}]
+      \item If $X, Y \in \mathcal{W}$, then $X + Y \in mathcal{W}$
+      \item $\forall_{X \in \mathcal{W}}$ and some scalars $a$, $aX \in \mathcal{W}$
+      \item $0\ in \mathcal{W}$
+    \end{enumerate}
+  \item A subspace of a vector space $\mathcal{V}$ is itself a V.S. under addition and scalar multiplication of $\mathcal{V}$
+\end{itemize}
