@@ -1,0 +1,132 @@
+%! TEX root = ../ma351.tex
+
+
+% Following sections from my another note, probably belongs to this section
+\section{Checking Invertibility of a Matrix}
+
+Following statements are equivalent for an $n \times n$ matrix $A$.
+
+\begin{itemize}
+  \item $A$ is invertible (or nonsingular), i.e., there exists a matrix $B$ such that $AB = I_n = BA$
+  \item $\mathrm{Rank} A = n$
+  \item $A$ is row equivalent to $I_n$
+  \item The dimensions of both row space and column space of $A$ are $n$
+  \item The nullspace (kernel) of $A$ is $\{0\}$
+  \item $\forall B \in \mathbb{R}^n$, $AX = B$ has exactly one solution
+  \item $\mathrm{Det} A \neq 0$
+\end{itemize}
+
+Let us invert $A$ where
+
+\begin{align*}
+  A =
+  \begin{pmatrix}
+    2 & 0 & -1\\
+    5 & 1 &  0 \\
+    0 & 1 &  3
+  \end{pmatrix}
+\end{align*}
+
+To verify the Invertibility of $A$, we can check its determinant.
+
+\begin{align*}
+  \begin{pmatrix}
+    2 & 0 & -1\\
+    5 & 1 &  0 \\
+    0 & 1 &  3
+  \end{pmatrix}
+  \begin{pmatrix}
+    2 & 0 &           -1\\
+    0 & 1 & \frac{5}{2} \\
+    0 & 1 &           3
+  \end{pmatrix}
+  \explain{$R_2 \rightarrow R_2 - \frac{5}{2} R_1$}
+  \begin{pmatrix}
+    2 & 0 &           -1\\
+    0 & 1 & \frac{5}{2} \\
+    0 & 0 & \frac{1}{2}
+  \end{pmatrix}
+  \explain{$R_3 \rightarrow R_3 - R_2$}\\
+  \therefore \det A = 2 \cdot 1 \cdot \frac{1}{2} = 1
+\end{align*}
+
+Thus, $A$ is invertible.
+
+\section{Using Row Operations to Invert a Matrix}
+
+We can reduce $[A | I]$ until it becomes $[I | A^{-1}]$ to find the inverse.
+By the way, did you know that $I = [\delta_{ij}]$ where $\delta_{ij}$ is the Kronecker delta defined by
+
+\begin{align*}
+  \delta_{ij} =
+  \begin{cases}
+    0 & \quad i \neq j\\
+    1 & \quad i = j
+  \end{cases}
+\end{align*}
+
+Anyway, reducing $[A | I]$,
+
+\begin{align*}
+  \left(
+    \begin{array}{rrr|rrr}  % r for right, c for center
+      2 & 0 & -1 & 1 & 0 & 0\\
+      5 & 1 &  0 & 0 & 1 & 0\\
+      0 & 1 &  3 & 0 & 0 & 1
+    \end{array}
+  \right)\\
+  \left(
+    \begin{array}{rrr|rrr}
+      1 & 0 & - \frac{1}{2} & \frac{1}{2} & 0 & 0\\
+      5 & 1 &             0 &           0 & 1 & 0\\
+      0 & 1 &             3 &           0 & 0 & 1
+    \end{array}
+  \right)
+  \explain{$R_1 \rightarrow \frac{R_1}{2}$}\\
+  \left(
+    \begin{array}{rrr|rrr}
+      1 & 0 & - \frac{1}{2} &  \frac{1}{2} & 0 & 0\\
+      0 & 1 &   \frac{5}{2} & -\frac{5}{2} & 1 & 0\\
+      0 & 1 &             3 &            0 & 0 & 1
+    \end{array}
+  \right)
+  \explain{$R_2 \rightarrow R_2 - 5R_1$}\\
+  \left(
+    \begin{array}{rrr|rrr}
+      1 & 0 & - \frac{1}{2} &  \frac{1}{2} &  0 & 0\\
+      0 & 1 &   \frac{5}{2} & -\frac{5}{2} &  1 & 0\\
+      0 & 0 &   \frac{1}{2} &  \frac{5}{2} & -1 & 1
+    \end{array}
+  \right)
+  \explain{$R_3 \rightarrow R_3 - R_2$}\\
+  \left(
+    \begin{array}{rrr|rrr}
+      1 & 0 &             0 &            3 & -1 &  1\\
+      0 & 1 &             0 &          -15 &  6 & -5\\
+      0 & 0 &   \frac{1}{2} &  \frac{5}{2} & -1 &  1
+    \end{array}
+  \right)
+  \explain{{$R_1 \rightarrow R_1 + R_3$}\\{$R_2 \rightarrow R_2 - 5R_3$}}\\
+  \left(
+    \begin{array}{rrr|rrr}
+      1 & 0 & 0 &   3 & -1 &  1\\
+      0 & 1 & 0 & -15 &  6 & -5\\
+      0 & 0 & 1 &   5 & -2 &  2
+    \end{array}
+  \right)
+  \explain{$R_3 \rightarrow 2R_3$}
+\end{align*}
+
+Thus,
+
+\begin{align*}
+  A^{-1} =
+  \begin{pmatrix}
+    3 & -1 & 1\\
+    -15 & 6 & -5\\
+    5 & -2 & 2
+  \end{pmatrix}
+\end{align*}
+
+And indeed, $AA^{-1} = I$.
+
