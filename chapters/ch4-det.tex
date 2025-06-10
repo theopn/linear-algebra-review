@@ -221,7 +221,7 @@
       %
       \\
       &= 3 \cdot
-      \arrows4{3R_1}{}{}{}
+      \arrows4{\frac{R_1}{3}}{}{}{}
       \begin{vmatrix}
         3 & 6 & 9 & 12\\
         1 & 2 & 2 & 1\\
@@ -315,7 +315,129 @@
 \section{A Formula For Inverses}
 
 \begin{itemize}
-  \item \textbf{Cramer's Rule} Consider the elements of Laplace Expansion $(-1)^{i + j} a_{ij} A_{ij}$
+  \item \textbf{Cramer's Rule} states that if $A$ is invertible, then for $AX = Y$ where $X, Y \in \mathbb{R}^n$, $X = [ x_1, x_2, \ldots, x_n ]^t$ where
+    \begin{align*}
+      x_i = \frac{\mathrm{det} [ A_1, \ldots, A_{i - 1}, Y, A_{i + 1}, \ldots, A_n ]}{\mathrm{det} A}
+    \end{align*}
+    For example, to find the solution of
+    \begin{align*}
+      \begin{cases}
+        5x_1 + 2x_2 + x_3 = y_1\\
+        2x_1 + 2x_2 2x_3 = y_2\\
+        2x_1 + x_2 + x_3 = y_3
+      \end{cases}
+    \end{align*}
+    Find the determinant of the augmented matrix first
+    \begin{align*}
+      &
+      \begin{vmatrix}
+        5 & 2 & 1\\
+        2 & 2 & 2\\
+        2 & 1 & 1
+      \end{vmatrix}
+      =
+      2
+      \arrows3{}{\frac{R_2}{2}}{}
+      \begin{vmatrix}
+        5 & 2 & 1\\
+        1 & 1 & 1\\
+        2 & 1 & 1
+      \end{vmatrix}
+      =
+      2
+      \arrows3{R_1 - 5R_2}{}{R_3 - 2R_2}
+      \begin{vmatrix}
+        0 & -3 & -4\\
+        1 & 1 & 1\\
+        0 & -1 & -1
+      \end{vmatrix}
+      =
+      - 2
+      \arrows3{}{}{-R_3}
+      \begin{vmatrix}
+        0 & -3 & -4\\
+        1 & 1 & 1\\
+        0 & 1 & 1
+      \end{vmatrix}
+      \\
+      &
+      =
+      -2
+      \arrows3{R_1 + 3R_3}{R_2 - R_3}{}
+      \begin{vmatrix}
+        0 & 0 & -1\\
+        1 & 0 & 0\\
+        0 & 1 & 1
+      \end{vmatrix}
+      =
+      2
+      \arrows3{R_2}{R_1}{}
+      \begin{vmatrix}
+        1 & 0 & 0\\
+        0 & 0 & -1\\
+        0 & 1 & 1
+      \end{vmatrix}
+      =
+      -2
+      \arrows3{}{R_3}{R_2}
+      \begin{vmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 1\\
+        0 & 0 & -1
+      \end{vmatrix}
+      = 2
+    \end{align*}
+    According to Cramer's rule,
+    \begin{align*}
+      &
+      x_1 = \frac{\begin{vmatrix}
+        y_1 & 2 & 1\\
+        y_2 & 2 & 2\\
+        y_3 & 1 & 1
+      \end{vmatrix}}{2}
+      = \frac{2y_1 + 4y_3 + y_2 - 2y_3 - 2y_2 - 2y_1}{2}
+      = \frac{-y_2 + 2y_3}{2}
+      %
+      \\
+      &
+      x_2 = \frac{\begin{vmatrix}
+        5 & y_1 & 1\\
+        2 & y_2 & 2\\
+        2 & y_3 & 1
+      \end{vmatrix}}{2}
+      = \frac{5y_2 + 4y_1 + 2y_3 - 2y_2 - 2y_1 - 10y_3}{2}
+      = \frac{2y_1 + 3y_2 -8y_3}{2}
+      %
+      \\
+      &
+      x_3 = \frac{\begin{vmatrix}
+        5 & 2 & y_1\\
+        2 & 2 & y_2\\
+        2 & 1 & y_3
+      \end{vmatrix}}{2}
+      = \frac{10y_3 + 4y_2 + 2y_1 - 4y_1 - 4y_3 - 5y_2}{2}
+      = \frac{-2y_1 -y_2 + 6y_3}{2}
+    \end{align*}
+    \begin{align*}
+      \therefore
+      \begin{bmatrix}
+        x_1\\ x_2\\ x_3
+      \end{bmatrix}
+      = \frac{1}{2} \begin{bmatrix}
+        -y_2 + 2y_3\\
+        2y_1 + 3y_2 - 8y_3\\
+        -2y_1 - y_2 + 6y_3
+      \end{bmatrix}
+      = \frac{1}{2} \begin{bmatrix}
+        0 & -1 & 2\\
+        2 & 3 & -8\\
+        -2 & -1 & 6
+      \end{bmatrix} \begin{bmatrix}
+        y_1\\ y_2\\ y_3
+      \end{bmatrix}
+    \end{align*}
+    In fact, the matrix being multiplied to $Y$ is $A^{-1}$
+  \item \textbf{Cramer's Rule for finding inverses}: Consider the elements of Laplace Expansion $(-1)^{i + j} a_{ij} A_{ij}$
     \begin{itemize}
       \item $A_{ij}$ is called a \textbf{minor} of the elemenet at $(i, j)$ and is the determinant of the smaller $(n - 1) \times (n - 1)$ sub-matrix resulting from deleting row $i$ and column $j$
       \item A \textbf{cofactor} $C_{ij} = (-1)^{i + j} A_{ij}$
@@ -410,137 +532,4 @@
     \end{align*}
 
     We already found that $\det A = 1$, so $A^{-1} = \frac{1}{1} C^t = C^t$.
-  \item To use Cramer's rule to solve the system,  TODO: page 264
 \end{itemize}
-
-\section{Checking Invertibility of a Matrix}
-
-Following statements are equivalent for an $n \times n$ matrix $A$.
-
-\begin{itemize}
-  \item $A$ is invertible (or nonsingular), i.e., there exists a matrix $B$ such that $AB = I_n = BA$
-  \item $\rank A = n$
-  \item $A$ is row equivalent to $I_n$
-  \item The dimensions of both row space and column space of $A$ are $n$
-  \item The nullspace (kernel) of $A$ is $\{0\}$
-  \item $\forall B \in \mathbb{R}^n$, $AX = B$ has exactly one solution
-  \item $\determinant A \neq 0$
-\end{itemize}
-
-Let us invert $A$ where
-
-\begin{align*}
-  A =
-  \begin{pmatrix}
-    2 & 0 & -1\\
-    5 & 1 &  0 \\
-    0 & 1 &  3
-  \end{pmatrix}
-\end{align*}
-
-To verify the Invertibility of $A$, we can check its determinant.
-
-\begin{align*}
-  \begin{pmatrix}
-    2 & 0 & -1\\
-    5 & 1 &  0 \\
-    0 & 1 &  3
-  \end{pmatrix}
-  \begin{pmatrix}
-    2 & 0 &           -1\\
-    0 & 1 & \frac{5}{2} \\
-    0 & 1 &           3
-  \end{pmatrix}
-  \explain{$R_2 \rightarrow R_2 - \frac{5}{2} R_1$}
-  \begin{pmatrix}
-    2 & 0 &           -1\\
-    0 & 1 & \frac{5}{2} \\
-    0 & 0 & \frac{1}{2}
-  \end{pmatrix}
-  \explain{$R_3 \rightarrow R_3 - R_2$}\\
-  \therefore \det A = 2 \cdot 1 \cdot \frac{1}{2} = 1
-\end{align*}
-
-Thus, $A$ is invertible.
-
-\section{Using Row Operations to Invert a Matrix}
-
-We can reduce $[A | I]$ until it becomes $[I | A^{-1}]$ to find the inverse.
-By the way, did you know that $I = [\delta_{ij}]$ where $\delta_{ij}$ is the Kronecker delta defined by
-
-\begin{align*}
-  \delta_{ij} =
-  \begin{cases}
-    0 & \quad i \neq j\\
-    1 & \quad i = j
-  \end{cases}
-\end{align*}
-
-Anyway, reducing $[A | I]$,
-
-\begin{align*}
-  \left(
-    \begin{array}{rrr|rrr}  % r for right, c for center
-      2 & 0 & -1 & 1 & 0 & 0\\
-      5 & 1 &  0 & 0 & 1 & 0\\
-      0 & 1 &  3 & 0 & 0 & 1
-    \end{array}
-  \right)\\
-  \left(
-    \begin{array}{rrr|rrr}
-      1 & 0 & - \frac{1}{2} & \frac{1}{2} & 0 & 0\\
-      5 & 1 &             0 &           0 & 1 & 0\\
-      0 & 1 &             3 &           0 & 0 & 1
-    \end{array}
-  \right)
-  \explain{$R_1 \rightarrow \frac{R_1}{2}$}\\
-  \left(
-    \begin{array}{rrr|rrr}
-      1 & 0 & - \frac{1}{2} &  \frac{1}{2} & 0 & 0\\
-      0 & 1 &   \frac{5}{2} & -\frac{5}{2} & 1 & 0\\
-      0 & 1 &             3 &            0 & 0 & 1
-    \end{array}
-  \right)
-  \explain{$R_2 \rightarrow R_2 - 5R_1$}\\
-  \left(
-    \begin{array}{rrr|rrr}
-      1 & 0 & - \frac{1}{2} &  \frac{1}{2} &  0 & 0\\
-      0 & 1 &   \frac{5}{2} & -\frac{5}{2} &  1 & 0\\
-      0 & 0 &   \frac{1}{2} &  \frac{5}{2} & -1 & 1
-    \end{array}
-  \right)
-  \explain{$R_3 \rightarrow R_3 - R_2$}\\
-  \left(
-    \begin{array}{rrr|rrr}
-      1 & 0 &             0 &            3 & -1 &  1\\
-      0 & 1 &             0 &          -15 &  6 & -5\\
-      0 & 0 &   \frac{1}{2} &  \frac{5}{2} & -1 &  1
-    \end{array}
-  \right)
-  \explain{{$R_1 \rightarrow R_1 + R_3$}\\{$R_2 \rightarrow R_2 - 5R_3$}}\\
-  \left(
-    \begin{array}{rrr|rrr}
-      1 & 0 & 0 &   3 & -1 &  1\\
-      0 & 1 & 0 & -15 &  6 & -5\\
-      0 & 0 & 1 &   5 & -2 &  2
-    \end{array}
-  \right)
-  \explain{$R_3 \rightarrow 2R_3$}
-\end{align*}
-
-Thus,
-
-\begin{align*}
-  A^{-1} =
-  \begin{pmatrix}
-    3 & -1 & 1\\
-    -15 & 6 & -5\\
-    5 & -2 & 2
-  \end{pmatrix}
-\end{align*}
-
-And indeed, $AA^{-1} = I$.
-
-\section{Using Cramer's Rule to Invert a Matrix}
-
-
